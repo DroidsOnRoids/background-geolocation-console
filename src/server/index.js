@@ -48,7 +48,7 @@ app.use(bodyParser.raw(parserLimits));
   app.use(siteApi);
   app.use('/api/site', siteApi);
   app.use('/api/firebase', firebase);
-  app.use('/api/jwt', api);
+  app.use('/jwt/api', api);
   app.use('/api', firebaseURL ? firebase : api);
   app.use('/api', tests);
 

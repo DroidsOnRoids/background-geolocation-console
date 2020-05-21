@@ -21,7 +21,7 @@ let token;
 beforeAll(async () => {
   const res = await chai
     .request(server)
-    .post('/api/jwt/register')
+    .post('/jwt/api/register')
     .send(regData);
   ({ accessToken: token } = res.body);
 });

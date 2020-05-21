@@ -20,7 +20,7 @@ let token;
 beforeAll(async () => {
   const res = await chai
     .request(server)
-    .post('/api/jwt/register')
+    .post('/jwt/api/register')
     .send(regData);
   ({ accessToken: token } = res.body);
 });
@@ -29,7 +29,7 @@ describe('jwt api', () => {
   test('/register', async () => {
     const res = await chai
       .request(server)
-      .post('/api/jwt/register')
+      .post('/jwt/api/register')
       .send(regData);
     expect(res).have.status(200);
     expect(res).to.be.json;
@@ -44,7 +44,7 @@ describe('jwt api', () => {
   test('/register without device info', async () => {
     const res = await chai
       .request(server)
-      .post('/api/jwt/register')
+      .post('/jwt/api/register')
       .send({ org: 'test' });
     expect(res).have.status(500);
     expect(res).to.be.json;
@@ -54,7 +54,7 @@ describe('jwt api', () => {
   test('/company_tokens', async () => {
     const res = await chai
       .request(server)
-      .get('/api/jwt/company_tokens')
+      .get('/jwt/api/company_tokens')
       .set('Authorization', `Bearer ${token}`);
     expect(res).have.status(200);
     expect(res).to.be.json;
@@ -63,7 +63,7 @@ describe('jwt api', () => {
   test('/company_tokens 403', async () => {
     const res = await chai
       .request(server)
-      .get('/api/jwt/company_tokens')
+      .get('/jwt/api/company_tokens')
       .set('Authorization', 'Bearer !!!');
     expect(res).have.status(403);
     expect(res).to.be.json;
@@ -72,7 +72,7 @@ describe('jwt api', () => {
   test('/refresh_token', async () => {
     const res = await chai
       .request(server)
-      .get('/api/jwt/refresh_token')
+      .get('/jwt/api/refresh_token')
       .set('Authorization', `Bearer ${token}`);
     expect(res).have.status(200);
     expect(res).to.be.json;
@@ -87,7 +87,7 @@ describe('jwt api', () => {
   test('/refresh_token 403', async () => {
     const res = await chai
       .request(server)
-      .get('/api/jwt/refresh_token')
+      .get('/jwt/api/refresh_token')
       .set('Authorization', 'Bearer !!');
     expect(res).have.status(403);
     expect(res).to.be.json;
@@ -96,7 +96,7 @@ describe('jwt api', () => {
   test('/stats', async () => {
     const res = await chai
       .request(server)
-      .get('/api/jwt/stats')
+      .get('/jwt/api/stats')
       .set('Authorization', `Bearer ${token}`);
     expect(res).have.status(200);
     expect(res).to.be.json;
@@ -105,7 +105,7 @@ describe('jwt api', () => {
   test('/stats 403', async () => {
     const res = await chai
       .request(server)
-      .get('/api/jwt/stats')
+      .get('/jwt/api/stats')
       .set('Authorization', 'Bearer ');
     expect(res).have.status(403);
     expect(res).to.be.json;
@@ -114,7 +114,7 @@ describe('jwt api', () => {
   test('/devices', async () => {
     const res = await chai
       .request(server)
-      .get('/api/jwt/devices')
+      .get('/jwt/api/devices')
       .set('Authorization', `Bearer ${token}`);
     expect(res).have.status(200);
     expect(res).to.be.json;
@@ -124,7 +124,7 @@ describe('jwt api', () => {
   test('/devices 403', async () => {
     const res = await chai
       .request(server)
-      .get('/api/jwt/devices')
+      .get('/jwt/api/devices')
       .set('Authorization', 'Bearer ');
     expect(res).have.status(403);
     expect(res).to.be.json;
@@ -135,7 +135,7 @@ describe('jwt api', () => {
     test('/locations/latest', async () => {
       const res = await chai
         .request(server)
-        .get('/api/jwt/locations/latest?device_id=372')
+        .get('/jwt/api/locations/latest?device_id=372')
         .set('Authorization', `Bearer ${token}`);
       expect(res).have.status(200);
     });
@@ -143,7 +143,7 @@ describe('jwt api', () => {
     test('POST /locations', async () => {
       const res = await chai
         .request(server)
-        .post('/api/jwt/locations')
+        .post('/jwt/api/locations')
         .set('Authorization', `Bearer ${token}`)
         .send({ location: [location, location2] });
       expect(res).have.status(200);
@@ -153,7 +153,7 @@ describe('jwt api', () => {
     test('POST /locations []', async () => {
       const res = await chai
         .request(server)
-        .post('/api/jwt/locations')
+        .post('/jwt/api/locations')
         .set('Authorization', `Bearer ${token}`)
         .send([{ location }]);
       expect(res).have.status(200);
@@ -163,7 +163,7 @@ describe('jwt api', () => {
     test('/locations', async () => {
       const res = await chai
         .request(server)
-        .get('/api/jwt/locations')
+        .get('/jwt/api/locations')
         .set('Authorization', `Bearer ${token}`);
       expect(res).have.status(200);
       expect(res).to.be.json;
@@ -174,7 +174,7 @@ describe('jwt api', () => {
     test('POST /locations/test', async () => {
       const res = await chai
         .request(server)
-        .post('/api/jwt/locations/test')
+        .post('/jwt/api/locations/test')
         .set('Authorization', `Bearer ${token}`)
         .send({ location });
       expect(res).have.status(200);
@@ -185,7 +185,7 @@ describe('jwt api', () => {
       const res = await chai
         .request(server)
         .delete(
-          `/api/jwt/locations?${
+          `/jwt/api/locations?${
             queryString.stringify({
               start_date: location.timestamp.substr(0, 10),
               end_date: new Date().toISOString().substr(0, 10),
